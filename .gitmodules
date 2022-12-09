@@ -1,0 +1,3 @@
+[submodule "Article_Service"]
+	path = Article_Service
+	url = git@github.com:DoniyorAli/Article_Service.git
