@@ -19,6 +19,8 @@ message Content {
     string body = 2;
 }
 
+
+
 message Article {
     string id = 1;
     Content content = 2;
