@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option go_package = "./blogpost";
+
+import "protoc/common.proto";
+import "google/protobuf/timestamp.proto";
+
+// The service definition.
+service AuthorService {
+    // Ping rpc
+    rpc Ping (Empty) returns (Pong) {}
+    rpc CreateAuthor (CreateAuthorRequest) returns (Author) {}
+    // rpc GetAuthorList (GetAuthorListRequest) returns (GetAuthorListResponse) {}
+
+}
+
+message Author {
+    string id = 1;
+    string fullname = 2;
+    string middlename = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+}
+
+message CreateAuthorRequest {
+    string fullname = 1;
+    string middlename = 2;
+}
+
+message GetAuthorListRequest {
+
+}
