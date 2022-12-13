@@ -1,3 +1,6 @@
 [submodule "Article_Service"]
 	path = Article_Service
 	url = git@github.com:DoniyorAli/Article_Service.git
+[submodule "Api_gateway"]
+	path = Api_gateway
+	url = git@github.com:DoniyorAli/Api_gateway.git
