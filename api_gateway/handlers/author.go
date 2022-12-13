@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -131,6 +132,8 @@ func (h *handler) GetAuthorList(ctx *gin.Context) {
 		})
 		return
 	}
+	
+
 
 	ctx.JSON(http.StatusOK, models.JSONRespons{
 		Message: "OK",
@@ -156,20 +159,23 @@ func (h *handler) UpdateAuthor(ctx *gin.Context) {
 		return
 	}
 
-	obj, err := h.grpcClients.Author.UpdateAuthor(ctx.Request.Context(), &blogpost.UpdateAuthorRequest{
+	_, err := h.grpcClients.Author.UpdateAuthor(ctx.Request.Context(), &blogpost.UpdateAuthorRequest{
+		Id: body.ID,
 		Fullname: body.Fullname,
 		Middlename: body.Middlename,
 	})
+	fmt.Println("ssss",err)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, models.JSONErrorRespons{
 			Error: err.Error(),
 		})
 		return
 	}
-
+	
 	author, err := h.grpcClients.Author.GetAuthorByID(ctx.Request.Context(), &blogpost.GetAuthorByIDRequest{
-		Id: obj.Status,
+		Id: body.ID,
 	}) 
+	fmt.Println("ssssxxx",err)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, models.JSONErrorRespons{
 			Error: err.Error(),

@@ -28,22 +28,12 @@ func (h *handler) CreateArticle(ctx *gin.Context) {
 		return
 	}
 
-	obj, err := h.grpcClients.Article.CreateArticle(ctx.Request.Context(), &blogpost.CreateArticleRequest{
+	article, err := h.grpcClients.Article.CreateArticle(ctx.Request.Context(), &blogpost.CreateArticleRequest{
 		Content: &blogpost.Content{
 			Title: body.Title,
 			Body: body.Body,
 		},
 		AuthorId: body.AuthorID,
-	}) 
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, models.JSONErrorRespons{
-			Error: err.Error(),
-		})
-		return
-	}
-
-	article, err := h.grpcClients.Article.GetArticleByID(ctx.Request.Context(), &blogpost.GetArticleByIDRequest{
-		Id: obj.Id,
 	}) 
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, models.JSONErrorRespons{
@@ -160,22 +150,13 @@ func (h *handler) UpdateArticle(ctx *gin.Context) {
 		return
 	}
 
-	obj, err := h.grpcClients.Article.UpdateArticle(ctx.Request.Context(), &blogpost.UpdateArticleRequest{
+	article, err := h.grpcClients.Article.UpdateArticle(ctx.Request.Context(), &blogpost.UpdateArticleRequest{
 		Content: &blogpost.Content{
 			Title: body.Title,
 			Body: body.Body,
 		},
+		Id: body.ID,
 	})
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, models.JSONErrorRespons{
-			Error: err.Error(),
-		})
-		return
-	}
-
-	article, err := h.grpcClients.Article.GetArticleByID(ctx.Request.Context(), &blogpost.GetArticleByIDRequest{
-		Id: obj.Id,
-	}) 
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, models.JSONErrorRespons{
 			Error: err.Error(),
@@ -203,18 +184,8 @@ func (h *handler) UpdateArticle(ctx *gin.Context) {
 func (h *handler) DeleteArticle(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 
-	obj, err := h.grpcClients.Article.GetArticleByID(ctx.Request.Context(), &blogpost.GetArticleByIDRequest{
-		Id: idStr,
-	}) 
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, models.JSONErrorRespons{
-			Error: err.Error(),
-		})
-		return
-	}
-
 	article, err := h.grpcClients.Article.DeleteArticle(ctx.Request.Context(), &blogpost.DeleteArticleRequest{
-		Id: obj.Id,
+		Id: idStr,
 	}) 
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, models.JSONErrorRespons{
