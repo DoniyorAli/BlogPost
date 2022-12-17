@@ -4,3 +4,6 @@
 [submodule "Api_gateway"]
 	path = Api_gateway
 	url = git@github.com:DoniyorAli/Api_gateway.git
+[submodule "Authorization_Service"]
+	path = Authorization_Service
+	url = git@github.com:DoniyorAli/Authorization_Service.git
